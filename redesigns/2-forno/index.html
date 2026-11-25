@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nonna Lucrezia — Forno</title>
+<link rel="icon" href="../../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  /* Redesign 2 — "Forno": one bold colour, line illustration, mono labels. Ref: Monte on Mobbin. */
+  :root{--red:#b8432a;--deep:#7d2a18;--cream:#f7efe3;--serif:'Fraunces',serif;--mono:'DM Mono',monospace}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--cream);color:var(--red);font-family:var(--mono);font-size:14px;line-height:1.55}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .caps{text-transform:uppercase;letter-spacing:.08em;font-size:12px;font-weight:500}
+
+  .top{position:fixed;inset:0 0 auto;z-index:10;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:20px 28px;color:var(--cream);mix-blend-mode:normal;transition:background .25s,color .25s}
+  .top.light{background:var(--cream);color:var(--red);border-bottom:1px solid rgba(184,67,42,.25)}
+  .top .logo{font-family:var(--serif);font-size:26px;letter-spacing:-.01em}
+  .top .r{justify-self:end}
+  .top nav{display:flex;gap:22px}
+
+  .hero{min-height:100vh;background:var(--red);color:var(--cream);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:90px 28px 40px;position:relative}
+  .hero .side{align-self:center}
+  .hero .side.r{justify-self:end;text-align:right}
+  .art{width:min(78vw,560px);color:var(--cream)}
+  .art .nl-ink{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .art .nl-basil{fill:currentColor;fill-opacity:.14}
+  .art .nl-slice{fill:currentColor;fill-opacity:.08}
+  .ring{transform-origin:250px 250px;animation:spin 40s linear infinite}
+  .ring text{font-family:var(--mono);font-size:17px;letter-spacing:4.2px;fill:var(--cream);font-weight:500}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.ring{animation:none}}
+  .scroll{position:absolute;bottom:28px;left:0;right:0;text-align:center;font-size:12px}
+  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.45;margin-right:8px;vertical-align:1px}
+  .dot.open{opacity:1;background:#ffd9a8;box-shadow:0 0 0 4px rgba(255,217,168,.25)}
+
+  .story{display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:center;max-width:1180px;margin:0 auto;padding:130px 28px}
+  .stack{position:relative;padding-right:40px}
+  .stack::before,.stack::after{content:"";position:absolute;inset:16px 6px 16px 34px;border:1.5px solid var(--red);border-radius:14px;background:#e9c9b4;transform:rotate(3deg)}
+  .stack::after{inset:30px 0 30px 40px;transform:rotate(6deg);background:#d7a78c;z-index:-1}
+  .stack img{position:relative;z-index:1;border:1.5px solid var(--red);border-radius:14px;aspect-ratio:4/3.4;object-fit:cover;width:100%}
+  .story h2{font-family:var(--serif);font-weight:300;font-size:clamp(2.6rem,5vw,4.4rem);line-height:1.02;letter-spacing:-.02em}
+  .story h2 em{font-style:italic}
+  .story p.copy{margin-top:26px;max-width:440px;text-transform:uppercase;letter-spacing:.06em;font-weight:500;line-height:1.7}
+  .nums{display:flex;gap:34px;margin-top:40px;border-top:1.5px solid var(--red);padding-top:22px}
+  .nums b{display:block;font-family:var(--serif);font-weight:400;font-size:2.4rem;line-height:1}
+
+  .menu{max-width:1180px;margin:0 auto;padding:40px 28px 130px}
+  .menu-head{display:flex;justify-content:space-between;align-items:end;border-bottom:1.5px solid var(--red);padding-bottom:18px;margin-bottom:40px}
+  .menu-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(3rem,7vw,6rem);line-height:.9;letter-spacing:-.03em}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips a{border:1.5px solid var(--red);border-radius:99px;padding:6px 14px}
+  .chips a:hover{background:var(--red);color:var(--cream)}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+  .box{border:1.5px solid var(--red);border-radius:16px;padding:26px;scroll-margin-top:90px}
+  .box.wide{grid-column:1/-1}
+  .box h3{font-family:var(--serif);font-style:italic;font-weight:300;font-size:2rem;margin-bottom:12px}
+  .box ul{list-style:none;display:grid}
+  .box.wide ul{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px}
+  .box li{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:13px 0;border-top:1px solid rgba(184,67,42,.3)}
+  .box li .n{font-family:var(--serif);font-size:1.25rem;color:var(--deep)}
+  .box li .p{font-weight:500}
+  .box li .d{grid-column:1/-1;font-size:12px;opacity:.8}
+  .note{margin-top:30px;text-align:center}
+
+  .visit{background:var(--red);color:var(--cream);padding:110px 28px 40px}
+  .visit .in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+  .visit .v{display:block;font-family:var(--serif);font-weight:300;font-size:1.8rem;line-height:1.25;margin-top:12px}
+  .visit .hours p{display:flex;justify-content:space-between;border-bottom:1px solid rgba(247,239,227,.3);padding:7px 0}
+  .bye{max-width:1180px;margin:100px auto 0;display:flex;justify-content:space-between;align-items:end;border-top:1.5px solid var(--cream);padding-top:22px}
+  .bye b{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(2.6rem,7vw,6rem);line-height:1}
+
+  @media (max-width:860px){
+    .top nav{display:none}
+    .hero{grid-template-columns:1fr;justify-items:center;text-align:center;gap:20px}
+    .hero .side.r{justify-self:center;text-align:center}
+    .story,.visit .in{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr}
+    .box.wide ul{grid-template-columns:1fr}
+    .menu-head{flex-direction:column;align-items:start;gap:18px}
+  }
+</style>
+</head>
+<body>
+<header class="top caps" id="top">
+  <nav><a href="#menu">Menu</a><a href="#verhaal">Verhaal</a></nav>
+  <a href="#" class="logo" style="text-transform:none;letter-spacing:-.01em;font-weight:400">nonna lucrezia</a>
+  <a href="#bezoek" class="r">Reserveer een tafel</a>
+</header>
+
+<section class="hero">
+  <div class="side caps"><span class="dot" id="dot"></span><span id="status"></span></div>
+  <svg class="art" viewBox="0 0 500 500" role="img" aria-label="Pizza illustratie met tekst Napolitaanse pizza, lekkere hapjes en wijn">
+    <defs><path id="circ" d="M250 250m-222 0a222 222 0 1 1 444 0a222 222 0 1 1 -444 0"/></defs>
+    <g class="ring"><text><textPath href="#circ">NAPOLITAANSE PIZZA · LEKKERE HAPJES · WIJN VAN NONNA LUCREZIA · UIT DE HOUTOVEN ·</textPath></text></g>
+    <g id="pizza"></g>
+  </svg>
+  <div class="side r caps">Izegem · 450°C</div>
+  <p class="scroll caps">Scrol verder<br>voor het goeie spul.</p>
+</section>
+
+<section class="story" id="verhaal">
+  <div class="stack"><img src="../../images/pizza_table.jpg" alt="Margherita met rode wijn en druiven"></div>
+  <div>
+    <p class="caps">Ons verhaal</p>
+    <h2 style="margin-top:14px">Fatto con <em>amore</em>, zoals Nonna het maakte.</h2>
+    <p class="copy">Ons deeg rust 48 uur en wordt in 90 seconden gebakken op 450 graden. Eenvoudige ingrediënten, recht uit Campania.</p>
+    <div class="nums">
+      <div><b>48u</b><span class="caps">deegrijs</span></div>
+      <div><b>450°</b><span class="caps">houtoven</span></div>
+      <div><b>100%</b><span class="caps">Italiaans</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="menu-head"><h2>La carta</h2><div class="chips caps" id="chips"></div></div>
+  <div class="grid" id="grid"></div>
+  <p class="note caps">Allergisch voor een ingrediënt? Laat het ons weten, dan bereiden we het zonder.</p>
+</section>
+
+<section class="visit" id="bezoek">
+  <div class="in">
+    <div><p class="caps">Adres</p><a class="v" id="addr" target="_blank" rel="noreferrer"></a></div>
+    <div><p class="caps">Openingsuren</p><div class="hours caps" id="hours" style="margin-top:12px"></div></div>
+    <div><p class="caps">Reserveren</p><span class="v"><a id="tel"></a><br><a id="mail" style="font-size:1.3rem"></a></span></div>
+  </div>
+  <div class="bye"><b>Buon appetito!</b><span class="caps">© Nonna Lucrezia</span></div>
+</section>
+
+<script type="module">
+import { pizza } from '../../js/banner.js';
+import { menu, info, hoursList, openStatus, esc, price } from '../shared.js';
+document.getElementById('pizza').outerHTML = pizza(236, 238, 128);
+
+const st = openStatus();
+document.getElementById('status').textContent = st.text;
+document.getElementById('dot').classList.toggle('open', st.open);
+
+const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-');
+document.getElementById('chips').innerHTML = menu.map(c => `<a href="#${slug(c.cat)}">${esc(c.cat)}</a>`).join('');
+document.getElementById('grid').innerHTML = menu.map(c => `
+  <div class="box${c.wide ? ' wide' : ''}" id="${slug(c.cat)}"><h3>${esc(c.cat)}</h3><ul>
+  ${c.items.map(([n, d, p]) => `<li><span class="n">${esc(n)}</span><span class="p">${price(p)}</span>${d ? `<span class="d">${esc(d)}</span>` : ''}</li>`).join('')}
+  </ul></div>`).join('');
+
+const addr = document.getElementById('addr'); addr.href = info.maps; addr.innerHTML = info.address.join('<br>');
+const tel = document.getElementById('tel'); tel.href = info.tel; tel.textContent = info.phone;
+const mail = document.getElementById('mail'); mail.href = 'mailto:' + info.email; mail.textContent = info.email;
+document.getElementById('hours').innerHTML = hoursList.map(([d, h]) => `<p><span>${d}</span><span>${h}</span></p>`).join('');
+
+const top = document.getElementById('top');
+const hero = document.querySelector('.hero');
+addEventListener('scroll', () => top.classList.toggle('light', scrollY > hero.offsetHeight - 70), { passive: true });
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nonna Lucrezia — Lavagna</title>
+<link rel="icon" href="../../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Redesign 4 — "Lavagna": modern menu board, tactile keycap buttons, live LED clock. Ref: Corgi on Mobbin. */
+  :root{--bg:#efefec;--ink:#1d1d1b;--soft:#6e6e69;--line:#d6d6d0;--led:#1f3b2d;--ledtxt:#c9f5b5;--wine:#9b2335;--sans:'Space Grotesk',sans-serif;--mono:'JetBrains Mono',monospace}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  .mono{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--soft)}
+
+  .top{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+  .logo{font-weight:600;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+  .logo i{width:30px;height:30px;border-radius:9px;background:var(--wine);display:grid;place-items:center;color:#fff;font-style:normal;font-size:15px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)}
+  .top nav{display:flex;gap:6px}
+  .key{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;background:#fff;border:1px solid var(--line);box-shadow:0 3px 0 var(--line);font-weight:500;font-size:14px;transition:transform .08s,box-shadow .08s}
+  .key:active{transform:translateY(3px);box-shadow:0 0 0 var(--line)}
+  .key.dark{background:var(--ink);color:#fff;border-color:#000;box-shadow:0 3px 0 #000}
+  .key.dark:active{box-shadow:0 0 0 #000}
+
+  .hero{padding:90px 0 70px}
+  .hero h1{font-weight:500;font-size:clamp(2.4rem,5.6vw,4.6rem);line-height:1.04;letter-spacing:-.04em;color:#4a4a46;max-width:980px}
+  .hero h1 b{color:var(--ink);font-weight:500}
+  .led{display:inline-block;vertical-align:middle;font-family:var(--mono);font-weight:500;font-size:.62em;letter-spacing:.06em;background:var(--led);color:var(--ledtxt);padding:.12em .42em;border-radius:6px;border:3px solid #3d3d3a;box-shadow:inset 0 0 14px rgba(0,0,0,.5),0 0 0 1px #000;text-shadow:0 0 8px rgba(201,245,181,.6)}
+  .hero .actions{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
+
+  .board{background:linear-gradient(180deg,#fafaf8,#ececea);border:1px solid #dcdcd6;border-radius:22px;padding:34px;box-shadow:inset 0 1px 0 #fff,0 1px 2px rgba(0,0,0,.05),0 18px 40px -20px rgba(0,0,0,.18)}
+  .board+.board{margin-top:26px}
+  .cols{display:grid;gap:10px 44px}
+  .c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .board h2{font-weight:500;font-size:28px;letter-spacing:-.03em;margin-bottom:18px}
+  .head{display:flex;justify-content:space-between;padding-bottom:8px}
+  .row{display:flex;align-items:baseline;gap:8px;font-size:14px;padding:6px 0}
+  .row i{flex:1;border-bottom:1px dotted #b9b9b2;transform:translateY(-4px)}
+  .row .p{font-family:var(--mono);font-size:13px}
+  .desc{font-size:12px;color:var(--soft);margin:-4px 0 6px;line-height:1.35}
+  .sub h2{font-size:22px}
+  .note{margin:22px 0 0;text-align:center}
+
+  .story{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin:90px 0}
+  .story .photo{padding:12px}
+  .story .photo img{border-radius:14px;aspect-ratio:4/3;object-fit:cover;width:100%}
+  .story h2{font-size:36px;line-height:1.05}
+  .story p.t{color:#4a4a46;margin-top:14px;font-size:17px}
+  .stat{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}
+  .stat div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 3px 0 var(--line)}
+  .stat b{display:block;font-size:30px;font-weight:500;letter-spacing:-.03em}
+
+  .visit{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:26px;margin-bottom:60px}
+  .visit .board{margin:0}
+  .visit .big{display:block;font-size:22px;font-weight:500;letter-spacing:-.02em;margin-top:10px;line-height:1.3}
+  .hrow{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;border-bottom:1px dotted #c9c9c2}
+  .hrow.today{font-weight:600}
+  .hrow.today span:first-child::before{content:"▶ ";color:var(--wine)}
+
+  footer{display:flex;justify-content:space-between;align-items:center;padding:30px 0 50px;border-top:1px solid var(--line)}
+  footer b{font-size:28px;font-weight:500;letter-spacing:-.03em}
+
+  @media (max-width:900px){
+    .top nav{display:none}
+    .c3,.c2,.story,.visit{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a href="#" class="logo"><i>N</i>Nonna Lucrezia</a>
+    <nav><a class="key" href="#menu">Menu</a><a class="key" href="#verhaal">Verhaal</a><a class="key" href="#bezoek">Bezoek</a></nav>
+    <a class="key dark" href="#bezoek">Reserveer</a>
+  </header>
+
+  <section class="hero">
+    <p class="mono" style="margin-bottom:18px">Napolitaanse pizzeria · Izegem</p>
+    <h1 id="headline"><b>Napolitaanse pizza</b>, lekkere hapjes en wijn van Nonna Lucrezia. <span id="clockline"></span></h1>
+    <div class="actions"><a class="key dark" href="#bezoek">Reserveer een tafel</a><a class="key" href="#menu">Bekijk menu ↓</a></div>
+  </section>
+
+  <section id="menu"><div id="boards"></div>
+    <p class="note mono">Allergisch voor een ingrediënt? Laat het ons weten, dan bereiden we het gerecht zonder.</p>
+  </section>
+
+  <section class="story" id="verhaal">
+    <div class="board photo"><img src="../../images/pizza_table.jpg" alt="Margherita met rode wijn en druiven"></div>
+    <div class="board">
+      <p class="mono">Ons verhaal</p>
+      <h2 style="margin-top:10px">Fatto con amore.</h2>
+      <p class="t">Ons deeg rust 48 uur en wordt in 90 seconden gebakken op 450 graden. Eenvoudige ingrediënten, recht uit Campania, en het recept van Nonna Lucrezia als kompas.</p>
+      <div class="stat">
+        <div><b>48u</b><span class="mono">deegrijs</span></div>
+        <div><b>450°</b><span class="mono">houtoven</span></div>
+        <div><b>100%</b><span class="mono">Italiaans</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit" id="bezoek">
+    <div class="board"><p class="mono">Adres</p><a class="big" id="addr" target="_blank" rel="noreferrer"></a><a class="key" style="margin-top:18px" id="route" target="_blank" rel="noreferrer">Route →</a></div>
+    <div class="board"><div class="head"><span class="mono">Dag</span><span class="mono">Uren</span></div><div id="hours"></div></div>
+    <div class="board"><p class="mono">Reserveren</p><a class="big" id="tel"></a><a class="big" id="mail" style="font-size:17px"></a></div>
+  </section>
+
+  <footer><b>Buon appetito!</b><span class="mono">© Nonna Lucrezia</span></footer>
+</div>
+
+<script type="module">
+import { menu, info, hoursList, openStatus, esc, price } from '../shared.js';
+
+// Hero line with LED display
+const st = openStatus();
+const m = st.text.match(/^(.*?)(\d\d:\d\d)$/);
+document.getElementById('clockline').innerHTML = m
+  ? `${esc(m[1].trim())} <span class="led">${m[2].replace(':', ' ')}</span>`
+  : esc(st.text);
+
+// Menu boards
+const row = ([n, d, p], withDesc) => `<div class="row"><span>${esc(n)}</span><i></i><span class="p">${price(p)}</span></div>${withDesc && d ? `<p class="desc">${esc(d)}</p>` : ''}`;
+const head = '<div class="head"><span class="mono">Gerecht</span><span class="mono">Prijs</span></div>';
+const split = (arr, n) => Array.from({ length: n }, (_, i) => arr.slice(Math.ceil(arr.length / n) * i, Math.ceil(arr.length / n) * (i + 1)));
+const [pizza, speciale, ...small] = menu;
+document.getElementById('boards').innerHTML = `
+  <div class="board"><h2>${pizza.cat}</h2><div class="cols c3">${split(pizza.items, 3).map(col => `<div>${head}${col.map(i => row(i, true)).join('')}</div>`).join('')}</div></div>
+  <div class="board"><h2>${speciale.cat}</h2><div class="cols c2">${split(speciale.items, 2).map(col => `<div>${head}${col.map(i => row(i, true)).join('')}</div>`).join('')}</div></div>
+  <div class="board sub"><div class="cols c3">${small.map(c => `<div><h2>${esc(c.cat)}</h2>${head}${c.items.map(i => row(i, true)).join('')}</div>`).join('')}</div></div>`;
+
+// Visit
+const addr = document.getElementById('addr'); addr.href = info.maps; addr.innerHTML = info.address.join('<br>');
+document.getElementById('route').href = info.maps;
+const tel = document.getElementById('tel'); tel.href = info.tel; tel.textContent = info.phone;
+const mail = document.getElementById('mail'); mail.href = 'mailto:' + info.email; mail.textContent = info.email;
+const todayKey = ['Zo', 'Ma – Di', 'Ma – Di', 'Wo', 'Do', 'Vr – Za', 'Vr – Za'][new Date().getDay()];
+document.getElementById('hours').innerHTML = hoursList.map(([d, h]) => `<div class="hrow ${d === todayKey ? 'today' : ''}"><span>${d}</span><span>${h}</span></div>`).join('');
+</script>
+</body>
+</html>
